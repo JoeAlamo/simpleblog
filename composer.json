@@ -1,0 +1,17 @@
+{
+    "name": "joealamo/simpleblog",
+    "description": "Simple MVC blog",
+    "authors": [
+        {
+            "name": "Joe Alamo",
+            "email": "joe.keilty+github@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "App\\": "App/"
+        }
+    }
+}
