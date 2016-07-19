@@ -9,7 +9,17 @@
 namespace App\Controllers;
 
 
-class PostsController
-{
+use Core\Controller;
 
+class PostsController extends Controller
+{
+    public function index()
+    {
+
+    }
+
+    public function show()
+    {
+        
+    }
 }
