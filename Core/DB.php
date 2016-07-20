@@ -11,6 +11,8 @@ namespace Core;
 
 class DB
 {
+    static private $_PDO = null;
+
     public static function getPDO()
     {
         $driver =  getenv('DB_DRIVER') ?: 'mysql';
@@ -19,15 +21,17 @@ class DB
         $user = getenv('DB_USER') ?: 'simpleblog';
         $password = getenv('DB_PASSWORD') ?: 'password';
 
-        $pdo = new \PDO(
-            "$driver:host=$host;dbname=$dbname;charset=utf8",
-            $user,
-            $password
-        );
+        if (self::$_PDO == null) {
+            self::$_PDO = new \PDO(
+                "$driver:host=$host;dbname=$dbname;charset=utf8",
+                $user,
+                $password
+            );
 
-        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            self::$_PDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        }
 
-        return $pdo;
+        return self::$_PDO;
     }
 
 }
