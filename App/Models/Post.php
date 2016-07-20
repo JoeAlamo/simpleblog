@@ -19,7 +19,7 @@ class Post
     public static function getAll()
     {
         $db = DB::getPDO();
-        $stmt = $db->query("SELECT * FROM posts ORDER BY date_created");
+        $stmt = $db->query("SELECT * FROM posts ORDER BY date_created DESC");
 
         return $stmt->fetchAll();
     }
@@ -33,7 +33,7 @@ class Post
     {
         $db = DB::getPDO();
         $stmt = $db->prepare("
-            SELECT id, slug, title, substr(body, 0, 100), date_created FROM posts ORDER BY date_created LIMIT :limit
+            SELECT id, slug, title, substr(body, 1, 100) AS body, date_created FROM posts ORDER BY date_created DESC LIMIT :limit
         ");
         $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
         $stmt->execute();
@@ -77,38 +77,36 @@ class Post
     }
 
     /**
-     * @param $id
      * @param $slug
      * @param $title
      * @param $body
      * @return bool
      */
-    public static function updateById($id, $slug, $title, $body)
+    public static function updateBySlug($slug, $title, $body)
     {
         $db = DB::getPDO();
         $stmt = $db->prepare("
-            UPDATE posts SET slug = :slug, title = :title, body = :body WHERE id = :id
+            UPDATE posts SET slug = :slug, title = :title, body = :body WHERE slug = :slug
         ");
-        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
-        $stmt->bindParam(':slug', $slug);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':body', $body);
 
-        return $stmt->execute();
+        return $stmt->execute([
+            ':slug' => $slug,
+            ':title' => $title,
+            ':body' => $body
+        ]);
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return bool
      */
-    public static function deleteById($id)
+    public static function deleteBySlug($slug)
     {
         $db = DB::getPDO();
         $stmt = $db->prepare("
-            DELETE FROM posts WHERE id = :id
+            DELETE FROM posts WHERE slug = :slug
         ");
-        $stmt->bindParam(':id', $id);
 
-        return $stmt->execute();
+        return $stmt->execute([':slug' => $slug]);
     }
 }

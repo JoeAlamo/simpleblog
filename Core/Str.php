@@ -38,6 +38,20 @@ class Str
     }
 
     /**
+     * Convert a string to slug form (hi-i-am-a-slug)
+     * @param $string
+     * @return mixed|string
+     */
+    public static function convertToSlug($string)
+    {
+        $slug = preg_replace("/[^a-zA-Z0-9-\\s]/", '', $string);
+        $slug = preg_replace("/[\\s]+/", '-', $slug);
+        $slug = strtolower(trim($slug, '-'));
+
+        return $slug;
+    }
+
+    /**
      * Escape a string for output
      * @param $string
      * @param string $encoding
