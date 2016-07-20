@@ -106,8 +106,8 @@ class Router
         if (!is_callable([$controllerObj, $action])) {
             throw new \BadMethodCallException("Method $action (in controller $controller) not found or not public");
         }
-        
-        $controllerObj->$action();
+
+        (new ControllerFiltersDecorator($controllerObj))->$action();
     }
 
     /**

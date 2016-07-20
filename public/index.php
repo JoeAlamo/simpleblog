@@ -31,6 +31,7 @@ $router->add('logout', ['controller' => 'AdminController', 'action' => 'logout']
 $router->add('admin', ['controller' => 'AdminController', 'action' => 'index'], ['GET']);
 
 $router->add('admin/posts', ['controller' => 'AdminPostsController', 'action' => 'index'], ['GET']);
+$router->add('admin/posts/add', ['controller' => 'AdminPostsController', 'action' => 'add'], ['GET']);
 $router->add('admin/posts', ['controller' => 'AdminPostsController', 'action' => 'store', ['POST']]);
 $router->add('admin/posts/{slug}', ['controller' => 'AdminPostsController', 'action' => 'edit'], ['GET']);
 $router->add('admin/posts/{slug}', ['controller' => 'AdminPostsController', 'action' => 'update'], ['POST']);

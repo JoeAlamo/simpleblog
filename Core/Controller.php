@@ -9,7 +9,7 @@
 namespace Core;
 
 
-abstract class Controller
+abstract class Controller implements ControllerInterface
 {
     protected $routeParameters = [];
 
@@ -19,27 +19,9 @@ abstract class Controller
     }
 
     /**
-     * Call any before filters, then the action, then any after filters.
-     * @param string $method
-     * @param array $args
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, array $args)
-    {
-        if (!method_exists($this, $method)) {
-            throw new \BadMethodCallException("Method $method not found in controller " . get_class($this));
-        }
-        
-        if ($this->before() !== false) {
-            call_user_func_array([$this, $method], $args);
-            $this->after();
-        }
-    }
-
-    /**
      * Before filter - implement to run code before controller actions
      */
-    protected function before()
+    public function before()
     {
 
     }
@@ -47,7 +29,7 @@ abstract class Controller
     /**
      * After filter - implement to run code after controller actions
      */
-    protected function after()
+    public function after()
     {
 
     }
