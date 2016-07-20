@@ -30,9 +30,6 @@ class View
 
         extract($_data, EXTR_SKIP);
 
-        ob_start();
-        include $_file;
-
-        return ob_get_clean();
+        require $_file;
     }
 }
