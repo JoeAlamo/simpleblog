@@ -38,6 +38,11 @@ class AdminController extends Controller
 
     public function index()
     {
+        if (!Session::isLoggedIn()) {
+            header("Location: /");
+            return;
+        }
+        
         View::render('Admin/index.php');
     }
 }
