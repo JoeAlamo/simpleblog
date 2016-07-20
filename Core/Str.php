@@ -36,4 +36,15 @@ class Str
     {
         return lcfirst(self::convertToStudlyCaps($string));
     }
+
+    /**
+     * Escape a string for output
+     * @param $string
+     * @param string $encoding
+     * @return string
+     */
+    public static function e($string, $encoding = 'UTF-8')
+    {
+        return htmlentities($string, ENT_QUOTES | ENT_XHTML, $encoding);
+    }
 }
