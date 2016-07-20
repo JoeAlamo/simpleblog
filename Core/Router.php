@@ -12,7 +12,7 @@ namespace Core;
 class Router
 {
     /**
-     * Route list ['url' => [PARAMS]]
+     * Route list [[x] => ['path' => A, 'params' => B, 'methods' => C]
      * @var array
      */
     protected $routes = [];
@@ -44,12 +44,15 @@ class Router
         // Add start & end delimiters and case insensitivity
         $path = '/^' . $path . '$/i';
 
-        $this->routes[$path]['params'] = $params;
-
         if (count($methods) === 0) {
             $methods = $this->methods;
         }
-        $this->routes[$path]['methods'] = $methods;
+
+        $this->routes[] = [
+            'path' => $path,
+            'params' => $params,
+            'methods' => $methods
+        ];
     }
     /**
      * Attempt to match given URL to a route in the routing table
@@ -59,9 +62,9 @@ class Router
      */
     public function match($url, $method)
     {
-        foreach ($this->routes as $path => $route) {
+        foreach ($this->routes as $route) {
             // If route matched, extract parameters
-            if (preg_match($path, $url, $matches) && in_array($method, $route['methods'])) {
+            if (preg_match($route['path'], $url, $matches) && in_array($method, $route['methods'])) {
                 foreach ($matches as $key => $match) {
                     $route['params'][(string)$key] = $match;
                 }
