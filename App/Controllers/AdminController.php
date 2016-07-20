@@ -11,6 +11,7 @@ namespace App\Controllers;
 
 use Core\Controller;
 use Core\Session;
+use Core\View;
 
 class AdminController extends Controller
 {
@@ -19,7 +20,7 @@ class AdminController extends Controller
         $username = isset($_POST['username']) ? $_POST['username'] : null;
         $password = isset($_POST['password']) ? $_POST['password'] : null;
 
-        if ($username === 'admin' && password_verify($password, '')) {
+        if ($username === 'admin' && password_verify($password, '$2y$10$7997A8P6XZ.zy.PmgQvhdOXZCY/xzWt0WuIDfgfyrGnurraTUmvfC')) {
             Session::login();
             header("Location: /admin");
 
@@ -37,6 +38,6 @@ class AdminController extends Controller
 
     public function index()
     {
-
+        View::render('Admin/index.php');
     }
 }
